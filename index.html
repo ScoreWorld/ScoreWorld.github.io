@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCOREWORLD - Bosh Sahifa</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+    <style>
+        @font-face {
+            font-family: 'shrift';
+            src: url('fonts/scoreworld.ttf') format('truetype');
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        header {
+            font-family: 'shrift', cursive;
+            background-image: url('minecraft.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            position: relative;
+        }
+        nav {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav a {
+            color: white;
+            margin: 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .hidden {
+            display: none;
+        }
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        footer a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .header-right {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+        }
+        .header-right span {
+            margin-right: 10px;
+        }
+        .logout-button {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #dc3545;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .logout-button:hover {
+            background-color: #c82333;
+        }
+        .product {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+        }
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .product h2 {
+            margin: 10px 0;
+        }
+        .product p {
+            font-size: 18px;
+            color: #333;
+        }
+        .payment-section {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none; /* Initially hidden */
+        }
+        .payment-section h2 {
+            margin: 0 0 20px;
+        }
+        .payment-form {
+            display: flex;
+            flex-direction: column;
+        }
+        .payment-form label {
+            margin-bottom: 10px;
+        }
+        .payment-form input {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .payment-form button {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .payment-form button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SCOREWORLD</h1>
+        <div class="header-right" id="headerRight">
+            <span id="username"></span>
+            <button class="logout-button" id="logoutButton">Chiqish</button>
+        </div>
+    </header>
+    <nav id="navBar">
+        <a href="scoreworld.html">Bosh Sahifa</a>
+        <a href="bizhaqimizda.html">Biz Haqimizda</a>
+        <a href="boglanish.html">Bog'lanish</a>
+    </nav>
+    <section>
+        <div class="product" id="product">
+            <img src="https://holyworld.ru/path-to-product-image.jpg" alt="Tovar Rasm">
+            <h2>Tovar Nomi</h2>
+            <p>Narxi: 10 rubl</p>
+        </div>
+        <div class="payment-section" id="paymentSection">
+            <h2>To'lov Qilish</h2>
+            <form class="payment-form" id="paymentForm">
+                <label for="cardName">Karta Egalining Ismi:</label>
+                <input type="text" id="cardName" name="cardName" required>
+                
+                <label for="cardNumber">Karta Raqami:</label>
+                <input type="text" id="cardNumber" name="cardNumber" required>
+                
+                <label for="expiryDate">Yakunlanish Sanasi (MM/YY):</label>
+                <input type="text" id="expiryDate" name="expiryDate" required>
+                
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv" name="cvv" required>
+                
+                <button type="submit">To'lovni Yakunlash</button>
+            </form>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2024 Mening Saytim. Barcha huquqlar himoyalangan.</p>
+        <a href="register.html" id="registerLink">Ro'yxatdan O'tish</a>
+        <a href="login.html" id="loginLink">Kirish</a>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const username = localStorage.getItem('username');
+            const isLoggedIn = localStorage.getItem('loggedIn');
+            const product = document.getElementById('product');
+            const paymentSection = document.getElementById('paymentSection');
+            const logoutButton = document.getElementById('logoutButton');
+
+            if (isLoggedIn && username) {
+                document.getElementById('username').textContent = username;
+                document.getElementById('loginLink').classList.add('hidden');
+                document.getElementById('registerLink').classList.add('hidden');
+            } else {
+                document.getElementById('username').textContent = 'Siz tizimga kirganingiz yo\'q.';
+                logoutButton.style.display = 'none';
+            }
+
+            product.addEventListener('click', function() {
+                if (isLoggedIn) {
+                    paymentSection.style.display = 'block'; // Show the payment section
+                } else {
+                    alert('Siz tizimga kirishingiz kerak!');
+                    window.location.href = 'login.html'; // Redirect to login page
+                }
+            });
+
+            logoutButton.addEventListener('click', function() {
+                localStorage.removeItem('loggedIn');
+                localStorage.removeItem('username');
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+</body>
+</html>
